@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Mail, Linkedin, Github, Send, CheckCircle2, AlertCircle, FileDown, ArrowRight } from 'lucide-react';
 
@@ -44,16 +44,39 @@ const ContactCard = ({ icon: Icon, label, value, href, isEmail }) => {
 
 const Contact = () => {
   const [formState, setFormState] = useState('idle'); // idle, sending, success, error
+  const [formError, setFormError] = useState('');
+  const contactFormEndpoint = import.meta.env.VITE_CONTACT_FORM_ENDPOINT || '/api/contact';
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setFormError('');
     setFormState('sending');
-    
-    // TODO: Add EmailJS or Formspree API here
-    setTimeout(() => {
-      // Fake network success
+
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+    const payload = Object.fromEntries(formData.entries());
+
+    try {
+      const response = await fetch(contactFormEndpoint, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        body: JSON.stringify(payload),
+      });
+
+      if (!response.ok) {
+        throw new Error(`Request failed with status ${response.status}`);
+      }
+
       setFormState('success');
-    }, 1500);
+      form.reset();
+    } catch (error) {
+      console.error('Contact form submission failed:', error);
+      setFormState('error');
+      setFormError('Something went wrong while sending your message. Please try again.');
+    }
   };
 
   return (
@@ -154,17 +177,17 @@ const Contact = () => {
                   <h3 style={s_formTitle}>Send a Message</h3>
                   
                   <div className="input-group">
-                    <input type="text" id="name" placeholder=" " required disabled={formState==='sending'} />
+                    <input type="text" id="name" name="name" placeholder=" " required disabled={formState==='sending'} />
                     <label htmlFor="name">Your Name</label>
                   </div>
                   
                   <div className="input-group">
-                    <input type="email" id="email" placeholder=" " required disabled={formState==='sending'} />
+                    <input type="email" id="email" name="email" placeholder=" " required disabled={formState==='sending'} />
                     <label htmlFor="email">Your Email</label>
                   </div>
                   
                   <div className="input-group">
-                    <select id="subject" required disabled={formState==='sending'} defaultValue="">
+                    <select id="subject" name="subject" required disabled={formState==='sending'} defaultValue="">
                       <option value="" disabled hidden></option>
                       <option value="job">Job Opportunity</option>
                       <option value="freelance">Freelance Project</option>
@@ -175,7 +198,7 @@ const Contact = () => {
                   </div>
                   
                   <div className="input-group">
-                    <textarea id="message" rows="5" placeholder=" " required disabled={formState==='sending'}></textarea>
+                    <textarea id="message" name="message" rows="5" placeholder=" " required disabled={formState==='sending'}></textarea>
                     <label htmlFor="message">Your Message</label>
                   </div>
 
@@ -190,7 +213,7 @@ const Contact = () => {
                   </motion.button>
                   
                   {formState === 'error' && (
-                    <div style={s_errorText}><AlertCircle size={14}/> Something went wrong. Try emailing directly.</div>
+                    <div style={s_errorText}><AlertCircle size={14}/> {formError || 'Something went wrong. Try emailing directly.'}</div>
                   )}
                 </motion.form>
               )}
