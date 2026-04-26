@@ -322,7 +322,7 @@ const s_subtext = {
   lineHeight: '1.6',
   marginTop: '20px',
   maxWidth: '90%',
-  scrollMarginTop: '12px',
+  scrollMarginTop: '28px',
 };
 
 const s_cardsContainer = {
