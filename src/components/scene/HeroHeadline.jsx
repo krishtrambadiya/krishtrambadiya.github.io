@@ -21,7 +21,7 @@ const HeroHeadline = () => {
       </p>
 
       <div style={{...buttonsContainerStyle, ...getStaggerStyle(loaded, 4)}}>
-        <a href="#contact" className="hero-btn" style={primaryButtonStyle}>
+        <a href="#contact-intro" className="hero-btn" style={primaryButtonStyle}>
           Let's Connect <ArrowRight size={18} />
         </a>
         <a href="https://github.com/krish-patel-33" className="hero-btn-secondary" target="_blank" rel="noreferrer" style={secondaryButtonStyle}>
