@@ -45,12 +45,18 @@ const ContactCard = ({ icon: Icon, label, value, href, isEmail }) => {
 const Contact = () => {
   const [formState, setFormState] = useState('idle'); // idle, sending, success, error
   const [formError, setFormError] = useState('');
-  const contactFormEndpoint = import.meta.env.VITE_CONTACT_FORM_ENDPOINT || '/api/contact';
+  const contactFormEndpoint = import.meta.env.VITE_CONTACT_FORM_ENDPOINT;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setFormError('');
     setFormState('sending');
+
+    if (!contactFormEndpoint) {
+      setFormState('error');
+      setFormError('Contact form is not configured. Please set VITE_CONTACT_FORM_ENDPOINT.');
+      return;
+    }
 
     const form = e.currentTarget;
     const formData = new FormData(form);
