@@ -141,7 +141,7 @@ const css = `
 }
 @media (max-width: 900px) {
   .hero-root {
-    min-height: 100vh;
+    min-height: 0;
     height: auto !important;
     padding: 92px 16px 24px !important;
     overflow: visible !important;

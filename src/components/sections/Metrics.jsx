@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { motion, useInView, useAnimation } from 'framer-motion';
+import { motion, useInView } from 'framer-motion';
 import CountUp from 'react-countup';
 import { Terminal, Lightbulb, Workflow, Cpu, Layers } from 'lucide-react';
 
@@ -128,7 +128,7 @@ const StatCard = ({ stat, index }) => {
 };
 
 // 2. Skill Bar with flowing spark
-const SkillBar = ({ item, index }) => {
+const SkillBar = ({ item, index, isActive }) => {
   return (
     <div style={s_skillContainer}>
       <div style={s_skillHeader}>
@@ -138,8 +138,7 @@ const SkillBar = ({ item, index }) => {
       <div style={s_barTrack}>
         <motion.div 
           initial={{ width: '0%' }}
-          whileInView={{ width: `${item.percent}%` }}
-          viewport={{ once: true, margin: "-50px" }}
+          animate={{ width: isActive ? `${item.percent}%` : '0%' }}
           transition={{ duration: 1.2, ease: [0.19, 1, 0.22, 1], delay: 0.2 + (index * 0.06) }}
           style={s_barFill}
           className="skill-bar-fill"
@@ -154,8 +153,11 @@ const SkillBar = ({ item, index }) => {
 
 /* --- MAIN COMPONENT --- */
 const Metrics = () => {
+  const sectionRef = useRef(null);
+  const barsInView = useInView(sectionRef, { once: true, amount: 0.15 });
+
   return (
-    <section style={s_section} id="metrics" className="metrics-section">
+    <section ref={sectionRef} style={s_section} id="metrics" className="metrics-section">
       {/* Background Dot Grid */}
       <div style={s_bgDots} />
       {/* Background Radial Glow */}
@@ -201,19 +203,19 @@ const Metrics = () => {
         <div style={s_techStackWrapper} className="metrics-tech-grid">
           <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once:true }} transition={{ delay: 0.5 }}>
             <h4 style={s_techColTitle}><Cpu size={16} /> FRONTEND</h4>
-            {techStack.frontend.map((item, i) => <SkillBar key={item.name} item={item} index={i}/>)}
+            {techStack.frontend.map((item, i) => <SkillBar key={item.name} item={item} index={i} isActive={barsInView} />)}
           </motion.div>
           <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once:true }} transition={{ delay: 0.6 }}>
             <h4 style={s_techColTitle}><Terminal size={16} /> BACKEND</h4>
-            {techStack.backend.map((item, i) => <SkillBar key={item.name} item={item} index={i}/>)}
+            {techStack.backend.map((item, i) => <SkillBar key={item.name} item={item} index={i} isActive={barsInView} />)}
           </motion.div>
           <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once:true }} transition={{ delay: 0.7 }}>
             <h4 style={s_techColTitle}><Layers size={16} /> DATABASE</h4>
-            {techStack.database.map((item, i) => <SkillBar key={item.name} item={item} index={i}/>)}
+            {techStack.database.map((item, i) => <SkillBar key={item.name} item={item} index={i} isActive={barsInView} />)}
           </motion.div>
           <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once:true }} transition={{ delay: 0.8 }}>
             <h4 style={s_techColTitle}><Workflow size={16} /> TOOLS</h4>
-            {techStack.tools.map((item, i) => <SkillBar key={item.name} item={item} index={i}/>)}
+            {techStack.tools.map((item, i) => <SkillBar key={item.name} item={item} index={i} isActive={barsInView} />)}
           </motion.div>
         </div>
 
