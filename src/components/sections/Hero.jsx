@@ -6,8 +6,19 @@ const Hero = () => {
   const containerRef = useRef(null);
   const [tilt, setTilt] = useState({ x: 0, y: 0 });
   const [scrolled, setScrolled] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
+    const syncViewport = () => {
+      setIsMobile(window.innerWidth <= 900);
+    };
+    syncViewport();
+    window.addEventListener('resize', syncViewport);
+    return () => window.removeEventListener('resize', syncViewport);
+  }, []);
+
+  useEffect(() => {
+    if (isMobile) return undefined;
     const handleMouseMove = (e) => {
       if (scrolled) return;
       const { innerWidth, innerHeight } = window;
@@ -18,7 +29,7 @@ const Hero = () => {
 
     window.addEventListener('mousemove', handleMouseMove);
     return () => window.removeEventListener('mousemove', handleMouseMove);
-  }, [scrolled]);
+  }, [isMobile, scrolled]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -35,14 +46,15 @@ const Hero = () => {
   return (
     <div 
       ref={containerRef}
+      className="hero-root"
       style={{
         ...heroStyle,
-        transform: scrolled ? 'rotateX(10deg) translateZ(-500px) scale(0.9)' : 'none',
-        opacity: scrolled ? 0.5 : 1,
+        transform: !isMobile && scrolled ? 'rotateX(10deg) translateZ(-500px) scale(0.9)' : 'none',
+        opacity: !isMobile && scrolled ? 0.5 : 1,
       }}
     >
       {/* Decorative vertical lines on far left */}
-      <div style={decorativeLineContainerStyle}>
+      <div style={decorativeLineContainerStyle} className="hero-decor">
         <div style={verticalLineStyle}></div>
         <div style={tickContainerStyle}>
           <div style={tickStyle}><span>// REACT</span></div>
@@ -52,7 +64,7 @@ const Hero = () => {
         </div>
       </div>
 
-      <div style={contentGridStyle}>
+      <div style={contentGridStyle} className="hero-content-grid">
         <HeroHeadline />
         <Scene3D tilt={tilt} scrolled={scrolled} />
       </div>
@@ -62,7 +74,7 @@ const Hero = () => {
 
 const heroStyle = {
   height: '100vh',
-  width: '100vw',
+  width: '100%',
   display: 'flex',
   position: 'relative',
   padding: '0 60px',
@@ -126,6 +138,23 @@ const css = `
   letter-spacing: 2px;
   white-space: nowrap;
   font-family: monospace;
+}
+@media (max-width: 900px) {
+  .hero-root {
+    min-height: 100vh;
+    height: auto !important;
+    padding: 92px 16px 24px !important;
+    overflow: visible !important;
+  }
+  .hero-decor {
+    display: none !important;
+  }
+  .hero-content-grid {
+    grid-template-columns: 1fr !important;
+    gap: 20px;
+    padding-left: 0 !important;
+    align-items: start !important;
+  }
 }
 `;
 document.head.insertAdjacentHTML('beforeend', `<style>${css}</style>`);

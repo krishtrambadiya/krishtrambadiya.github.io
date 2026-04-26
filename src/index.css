@@ -59,3 +59,78 @@ body {
 .preserve-3d {
   transform-style: preserve-3d;
 }
+
+@media (max-width: 900px) {
+  html, body, #root {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  .hero-scene {
+    min-height: 320px;
+  }
+
+  .hero-status-widget {
+    display: none !important;
+  }
+
+  .metrics-section,
+  .contact-section,
+  .experience-section,
+  .work-section,
+  .footer-section {
+    width: 100% !important;
+  }
+
+  .metrics-container {
+    padding: 0 16px !important;
+    gap: 44px !important;
+  }
+
+  .metrics-terminal {
+    width: 100% !important;
+    font-size: 0.72rem !important;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+
+  .metrics-stats-grid {
+    grid-template-columns: 1fr !important;
+    gap: 14px !important;
+  }
+
+  .metrics-tech-grid {
+    grid-template-columns: 1fr !important;
+    gap: 24px !important;
+  }
+
+  .metrics-learning-strip {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 16px !important;
+    padding: 18px !important;
+  }
+
+  .experience-section {
+    padding: 72px 16px !important;
+  }
+
+  .experience-container {
+    grid-template-columns: 1fr !important;
+    gap: 34px !important;
+  }
+
+  .work-section {
+    padding: 84px 16px !important;
+  }
+
+  .work-grid {
+    grid-template-columns: 1fr !important;
+    gap: 24px !important;
+  }
+
+  .project-card-offset {
+    margin-top: 0 !important;
+  }
+}

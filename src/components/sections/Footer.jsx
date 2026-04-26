@@ -2,7 +2,7 @@ import React from 'react';
 
 const Footer = () => {
   return (
-    <footer style={footerStyle}>
+    <footer style={footerStyle} className="footer-section">
       <div style={containerStyle}>
         
         {/* Massive CTA */}
@@ -34,7 +34,7 @@ const Footer = () => {
 
 const footerStyle = {
   padding: '120px 20px 60px',
-  width: '100vw',
+  width: '100%',
   backgroundColor: 'var(--bg-dark)',
   position: 'relative',
   zIndex: 10,

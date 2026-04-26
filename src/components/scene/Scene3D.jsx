@@ -14,7 +14,7 @@ const Scene3D = ({ tilt, scrolled }) => {
   }, []);
 
   return (
-    <div style={sceneContainerStyle}>
+    <div style={sceneContainerStyle} className="hero-scene">
       {/* Background radial primary glow */}
       <LightingAndAtmosphere />
       
@@ -24,6 +24,7 @@ const Scene3D = ({ tilt, scrolled }) => {
           ...parallaxContainerStyle,
           transform: `rotateX(${tilt.y}deg) rotateY(${tilt.x}deg)`
         }}
+        className="hero-parallax-container"
       >
         <ParticleField />
         
@@ -39,7 +40,7 @@ const Scene3D = ({ tilt, scrolled }) => {
       <div style={fogStyle}></div>
 
       {/* Compile Status Widget */}
-      <div style={{...statusWidgetStyle, opacity: loaded ? 1 : 0, transform: loaded ? 'translateY(0)' : 'translateY(20px)'}}>
+      <div style={{...statusWidgetStyle, opacity: loaded ? 1 : 0, transform: loaded ? 'translateY(0)' : 'translateY(20px)'}} className="hero-status-widget">
         <div style={statusDotStyle}></div>
         COMPILE STATUS: OK
       </div>

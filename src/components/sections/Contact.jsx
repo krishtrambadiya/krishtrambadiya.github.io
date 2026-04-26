@@ -86,21 +86,22 @@ const Contact = () => {
   };
 
   return (
-    <section style={s_section} id="contact">
+    <section style={s_section} id="contact" className="contact-section">
       {/* Background Ambience */}
       <div style={s_bgDots} />
       <div style={s_bgGlowLeft} />
       <div style={s_gutterLine} />
 
-      <div style={s_container}>
+      <div style={s_container} className="contact-container">
         
         {/* LEFT COLUMN */}
-        <div style={s_leftCol}>
+        <div style={s_leftCol} className="contact-left">
           <div style={s_headerBlock}>
             {/* Staggered text */}
             <div style={{ overflow: 'hidden' }}>
               <motion.h2 
                 initial={{ y: 100 }} whileInView={{ y: 0 }} viewport={{ once:true }} transition={{ duration: 0.6, ease: [0.33, 1, 0.68, 1] }} 
+                className="contact-headline"
                 style={s_headline}
               >
                 Let's Build
@@ -109,6 +110,7 @@ const Contact = () => {
             <div style={{ overflow: 'hidden' }}>
               <motion.h2 
                 initial={{ y: 100 }} whileInView={{ y: 0 }} viewport={{ once:true }} transition={{ duration: 0.6, delay: 0.1, ease: [0.33, 1, 0.68, 1] }} 
+                className="contact-headline"
                 style={{ ...s_headline, color: 'var(--accent-orange)' }}
               >
                 Something.
@@ -154,6 +156,7 @@ const Contact = () => {
         <motion.div 
           initial={{ opacity: 0, x: 50 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once:true }} transition={{ type: 'spring', damping: 20, delay: 0.3 }}
           style={s_rightCol}
+          className="contact-right"
         >
           <div className={`form-panel ${formState === 'error' ? 'error-shake' : ''}`}>
             
@@ -245,7 +248,7 @@ const Contact = () => {
 /* --- STYLES --- */
 const s_section = {
   padding: '120px 0',
-  width: '100vw',
+  width: '100%',
   backgroundColor: 'var(--bg-dark)',
   position: 'relative',
   zIndex: 10,
@@ -461,8 +464,24 @@ const s_socialRow = {
 /* --- INJECTED CSS OVERRIDES --- */
 const styleOverrides = `
   @media (max-width: 900px) {
-    .contact-container { flex-direction: column !important; }
+    .contact-section { padding: 88px 0 !important; }
+    .contact-container { 
+      flex-direction: column !important; 
+      padding: 0 16px !important;
+      gap: 36px !important;
+    }
     .contact-left, .contact-right { flex: 1 1 100% !important; min-width: 100%; }
+    .form-panel { padding: 20px !important; }
+    .contact-headline {
+      font-size: clamp(2.4rem, 11vw, 3.4rem) !important;
+      letter-spacing: -1px !important;
+    }
+    .contact-card {
+      padding: 16px !important;
+    }
+    .contact-card .card-action {
+      display: none;
+    }
   }
 
   .form-panel {

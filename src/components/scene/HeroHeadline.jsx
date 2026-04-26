@@ -10,17 +10,17 @@ const HeroHeadline = () => {
   }, []);
 
   return (
-    <div style={containerStyle}>
+    <div style={containerStyle} className="hero-headline">
       <h1 style={headlineStyle}>
         <div style={{ ...getStaggerStyle(loaded, 0), color: 'var(--accent-orange)' }}>Krish Trambadiya</div>
         <div style={getStaggerStyle(loaded, 1)}>Web Developer.</div>
       </h1>
       
-      <p style={{...subtextStyle, ...getStaggerStyle(loaded, 3)}}>
+      <p style={{...subtextStyle, ...getStaggerStyle(loaded, 3)}} className="hero-subtext">
         MERN Stack Developer architecting scalable, high-performance web applications.
       </p>
 
-      <div style={{...buttonsContainerStyle, ...getStaggerStyle(loaded, 4)}}>
+      <div style={{...buttonsContainerStyle, ...getStaggerStyle(loaded, 4)}} className="hero-cta-row">
         <a href="#contact-intro" className="hero-btn" style={primaryButtonStyle}>
           Let's Connect <ArrowRight size={18} />
         </a>
@@ -118,6 +118,27 @@ const css = `
     border-color: rgba(255, 255, 255, 0.2) !important; 
   }
   .hero-btn-secondary:active { transform: translateY(0); }
+  @media (max-width: 900px) {
+    .hero-headline {
+      gap: 18px !important;
+    }
+    .hero-subtext {
+      max-width: 100% !important;
+      font-size: 1rem !important;
+    }
+    .hero-cta-row {
+      flex-direction: column !important;
+      align-items: stretch !important;
+      gap: 10px !important;
+      width: 100%;
+    }
+    .hero-btn, .hero-btn-secondary {
+      justify-content: center;
+      width: 100%;
+      padding: 13px 16px !important;
+      font-size: 0.92rem !important;
+    }
+  }
 `;
 document.head.insertAdjacentHTML('beforeend', `<style>${css}</style>`);
 

@@ -155,7 +155,7 @@ const SkillBar = ({ item, index }) => {
 /* --- MAIN COMPONENT --- */
 const Metrics = () => {
   return (
-    <section style={s_section} id="metrics">
+    <section style={s_section} id="metrics" className="metrics-section">
       {/* Background Dot Grid */}
       <div style={s_bgDots} />
       {/* Background Radial Glow */}
@@ -163,7 +163,7 @@ const Metrics = () => {
       {/* Vertical Gutter Line */}
       <div style={s_gutterLine} />
 
-      <div style={s_container}>
+      <div style={s_container} className="metrics-container">
         
         {/* ROW 1: Entry Sequence */}
         <div style={s_headerBlock}>
@@ -183,6 +183,7 @@ const Metrics = () => {
             viewport={{ once: true }}
             transition={{ delay: 0.4 }}
             style={s_terminalContainer}
+            className="metrics-terminal"
           >
             <span style={{ color: '#E06C75' }}>&gt;</span> npm run build... <span style={{ color: '#98C379' }}>✓ compiled in 1.2s</span>
             <span className="terminal-cursor">_</span>
@@ -190,14 +191,14 @@ const Metrics = () => {
         </div>
 
         {/* ROW 2: Stats Row */}
-        <div style={s_statsGrid}>
+        <div style={s_statsGrid} className="metrics-stats-grid">
           {statsData.map((stat, i) => (
             <StatCard key={i} stat={stat} index={i} />
           ))}
         </div>
 
         {/* ROW 3: Tech Stack Grid */}
-        <div style={s_techStackWrapper}>
+        <div style={s_techStackWrapper} className="metrics-tech-grid">
           <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once:true }} transition={{ delay: 0.5 }}>
             <h4 style={s_techColTitle}><Cpu size={16} /> FRONTEND</h4>
             {techStack.frontend.map((item, i) => <SkillBar key={item.name} item={item} index={i}/>)}
@@ -223,6 +224,7 @@ const Metrics = () => {
           viewport={{ once: true }}
           transition={{ type: 'spring', damping: 20, delay: 0.8 }}
           style={s_learningStrip}
+          className="metrics-learning-strip"
         >
           <div style={s_learningLabel}><Lightbulb size={20} color="var(--accent-orange)" /> Currently Exploring:</div>
           <div style={s_pillContainer}>
@@ -270,7 +272,7 @@ const Metrics = () => {
 /* --- STYLES --- */
 const s_section = {
   padding: '100px 0',
-  width: '100vw',
+  width: '100%',
   backgroundColor: 'var(--bg-dark)',
   position: 'relative',
   zIndex: 10,

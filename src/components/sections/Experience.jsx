@@ -2,8 +2,8 @@ import React from 'react';
 
 const Experience = () => {
   return (
-    <section style={sectionStyle} id="experience">
-      <div style={containerStyle}>
+    <section style={sectionStyle} id="experience" className="experience-section">
+      <div style={containerStyle} className="experience-container">
         
         {/* Experience Column */}
         <div style={colStyle}>
@@ -69,7 +69,7 @@ const Experience = () => {
 
 const sectionStyle = {
   padding: '60px',
-  width: '100vw',
+  width: '100%',
   backgroundColor: 'var(--bg-dark)',
   position: 'relative',
   zIndex: 10,

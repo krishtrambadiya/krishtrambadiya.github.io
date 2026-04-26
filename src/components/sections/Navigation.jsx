@@ -10,8 +10,8 @@ const Navigation = () => {
   };
 
   return (
-    <nav style={navStyle}>
-      <div style={brandContainerStyle}>
+    <nav style={navStyle} className="site-nav">
+      <div style={brandContainerStyle} className="site-nav-brand">
         <div style={badgeStyle}>
           <span style={dotStyle}></span> SYSTEM ONLINE
         </div>
@@ -20,7 +20,7 @@ const Navigation = () => {
           KRISH TRAMBADIYA
         </h1> */}
       </div>
-      <div style={linksContainerStyle}>
+      <div style={linksContainerStyle} className="site-nav-links">
         <a href="#experience" className="nav-link" style={linkStyle} onClick={(event) => handleNavClick(event, 'experience')}>EXPERIENCE</a>
         <a href="#metrics" className="nav-link" style={linkStyle} onClick={(event) => handleNavClick(event, 'metrics')}>TECH STACK</a>
         <a href="#work" className="nav-link" style={linkStyle} onClick={(event) => handleNavClick(event, 'work')}>WORK</a>
@@ -127,6 +127,27 @@ const navAnimations = `
   background: rgba(232, 76, 30, 0.1) !important;
   transform: scale(1.05);
   box-shadow: 0 5px 15px rgba(232, 76, 30, 0.3);
+}
+@media (max-width: 900px) {
+  .site-nav {
+    padding: 18px 16px !important;
+    flex-direction: column;
+    gap: 12px;
+    align-items: flex-start !important;
+  }
+  .site-nav-links {
+    width: 100%;
+    gap: 12px !important;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+  }
+  .nav-link, .nav-resume {
+    font-size: 0.75rem !important;
+    letter-spacing: 0.6px !important;
+  }
+  .nav-resume {
+    padding: 8px 14px !important;
+  }
 }
 `;
 

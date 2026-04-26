@@ -2,12 +2,12 @@ import React from 'react';
 
 const SelectedWork = () => {
   return (
-    <section style={sectionStyle} id="work">
-      <div style={containerStyle}>
+    <section style={sectionStyle} id="work" className="work-section">
+      <div style={containerStyle} className="work-container">
         
         <h3 style={sectionHeadingStyle}>Selected Work</h3>
         
-        <div style={projectsGridStyle}>
+        <div style={projectsGridStyle} className="work-grid">
           
           {/* Project 1 */}
           <div style={projectCardStyle} className="project-card">
@@ -29,7 +29,7 @@ const SelectedWork = () => {
           </div>
 
           {/* Project 2 */}
-          <div style={{...projectCardStyle, marginTop: '80px'}} className="project-card">
+          <div style={{...projectCardStyle, marginTop: '80px'}} className="project-card project-card-offset">
             <div style={imageWrapperStyle}>
               <img src="/welthos_portfolio.png" alt="Welthos" style={imageStyle} />
             </div>
@@ -56,7 +56,7 @@ const SelectedWork = () => {
 
 const sectionStyle = {
   padding: '120px 60px',
-  width: '100vw',
+  width: '100%',
   backgroundColor: 'var(--bg-dark)',
   position: 'relative',
   zIndex: 10,
