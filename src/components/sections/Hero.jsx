@@ -66,7 +66,7 @@ const Hero = () => {
 
       <div style={contentGridStyle} className="hero-content-grid">
         <HeroHeadline />
-        <Scene3D tilt={tilt} scrolled={scrolled} />
+        {!isMobile ? <Scene3D tilt={tilt} scrolled={scrolled} /> : null}
       </div>
     </div>
   );

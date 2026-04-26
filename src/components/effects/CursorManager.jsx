@@ -3,16 +3,38 @@ import React, { useEffect, useState } from 'react';
 const CursorManager = () => {
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [laggingPos, setLaggingPos] = useState({ x: 0, y: 0 });
+  const [enabled, setEnabled] = useState(true);
 
   useEffect(() => {
+    const isTouchLikeDevice = () => {
+      if (typeof window === 'undefined') return false;
+      return (
+        window.matchMedia('(pointer: coarse)').matches ||
+        window.matchMedia('(hover: none)').matches ||
+        navigator.maxTouchPoints > 0
+      );
+    };
+
+    const syncEnabled = () => {
+      setEnabled(!isTouchLikeDevice());
+    };
+
+    syncEnabled();
+    window.addEventListener('resize', syncEnabled);
+    return () => window.removeEventListener('resize', syncEnabled);
+  }, []);
+
+  useEffect(() => {
+    if (!enabled) return undefined;
     const onMouseMove = (e) => {
       setPosition({ x: e.clientX, y: e.clientY });
     };
     window.addEventListener('mousemove', onMouseMove);
     return () => window.removeEventListener('mousemove', onMouseMove);
-  }, []);
+  }, [enabled]);
 
   useEffect(() => {
+    if (!enabled) return undefined;
     let animationFrameId;
     const render = () => {
       setLaggingPos((prev) => {
@@ -27,11 +49,14 @@ const CursorManager = () => {
     };
     render();
     return () => cancelAnimationFrame(animationFrameId);
-  }, [position]);
+  }, [enabled, position]);
+
+  if (!enabled) return null;
 
   return (
     <>
       <div 
+        className="custom-cursor-dot"
         style={{
           position: 'fixed',
           top: position.y,
@@ -47,6 +72,7 @@ const CursorManager = () => {
         }} 
       />
       <div 
+        className="custom-cursor-ring"
         style={{
           position: 'fixed',
           top: laggingPos.y,
